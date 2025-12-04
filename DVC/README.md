@@ -47,6 +47,11 @@ Also a new file "file1.txt.dvc" is created which will consist of hash-key which 
 - After this we do "git commit" so that all of these changes are logged.
 
 - If we want to switch to a different version of data, first switch to a different branch (or create one and then switch) and then do "git log", it will show the list of all the commits and from there we can choose the commit we want to backtrack to. Like if we want to see a particular version of data, we get the list of commits by "git log" and then "get checkout commit-hash". We'll see that file1.txt.dvc will get changed and get the hash-key of that commit.
-- Now if we want to switch to the latest version, "git checkout master" (That's the reason why we switched to a different branch).
+
 - But the file1.txt will not change. For it to change as per the commit-hash we checked out to, we need to do "dvc checkout". And then we'll see that file1.txt has also been restored to the previous/selected version.
 
+- Now if we want to switch to the latest version, "git checkout master" (That's the reason why we switched to a different branch). Then do "dvc checkout"
+```bash
+git checkout master
+dvc checkout
+```
