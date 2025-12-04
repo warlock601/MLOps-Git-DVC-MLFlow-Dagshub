@@ -13,7 +13,7 @@ while ML algorithms and methods are no longer tribal knowledge, they are still d
 - adopt engineering tools and best practices in data science projects
 
 Steps:
-- First we will put the virtual env directory folder in .gitignore so that whenever we do "gitinit", this folder will not be tracked. </br>
+- First we will put the virtual env directory folder in .gitignore so that whenever we do "git init", this folder will not be tracked. </br>
 
 - Then create requirements.txt and add "dvc" to it and then do
 ```bash
