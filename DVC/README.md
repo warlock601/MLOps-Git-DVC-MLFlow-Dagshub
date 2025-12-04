@@ -27,7 +27,7 @@ dvc add data/file1.txt
 ```
 we'll get something like this:
 <img width="1255" height="180" alt="image" src="https://github.com/user-attachments/assets/bb7ef313-2997-48a1-a13b-e3f7659963af" />
-So this basically means that it is giving indication to Git that it does not to track "data" directory anymore as it is being tracked by dvc now. So we run:
+So this basically means that it is giving indication to Git that it should not track "data" directory anymore as it is being tracked by dvc now. So we run:
 ```bash
 git add data/.gitignore data/file1.txt.dvc
 ```
