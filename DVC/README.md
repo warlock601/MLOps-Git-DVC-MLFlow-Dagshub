@@ -11,3 +11,8 @@ while ML algorithms and methods are no longer tribal knowledge, they are still d
 - understand how datasets and ML artifacts were built in the first place
 - compare model metrics among experiments
 - adopt engineering tools and best practices in data science projects
+
+
+First we will put the virtual env directory folder in .gitignore so that whenever we do "gitinit", this folder will not be tracked.
+git init
+dvc init     # to initialize dvc
