@@ -13,4 +13,10 @@ mlflow
 dvc-s3
 ```
 
-- Add 
+- Activate the virtual environment and then install libraries specified in requirements.txt
+```bash
+conda activate venv/
+pip install -r requirements.txt
+```
+- Create a .gitignore file and put venv/ in that because we don't want our virtual env to be tracked.
+- Since we need to start with data pre-processing, we need to have some kind of data first. So we'll upload the data intot he directory: data/raw/ & upload the .csv file.
