@@ -26,10 +26,32 @@ pip install -r requirements.txt
 The outcome will be 0 or 1 based on the input features which will specify whether the person has diabetes or not. Based on this dataset we'll create a pipeline for data pre-processing, model training and then model evaluation.
 
 - We'll create another folder "src" and files params.yml,__init__.py: through this file, we will be able to call this as a package, evaluate.py: specifically for evaluation, preprocess.py: for preprocessing such as reading data or any kind of feature engineering,train.py. - params.yml: will be used to setup some parameters. For preprocessing, we provide the input and then we save output for that preprocessed data. For training, we'll use the output that we saved from preprocessing as data, we provide path where the model will be saved.
-<img width="371" height="265" alt="image" src="https://github.com/user-attachments/assets/e95e6baf-336a-4557-afa3-88435d0f21fe" />
-- In preprocess.py, import libraries required to preprocess, import params.yml(within import, we'll make calls to "preprocess" and "train" parameters.
+<img width="371" height="265" alt="image" src="https://github.com/user-attachments/assets/e95e6baf-336a-4557-afa3-88435d0f21fe" /> </br>
+In params.yml, we'll make calls to "preprocess" and "train", and each of have multiple parameters. "model" parameter is used to specify that after training the model, it will be saved in this path.
 
-#### preprocessor.py
+#### preprocess.py
+In preprocess.py, import libraries required to preprocess like pandas, sys, import params.yml (in order to read params.yml), import os (so that we'll be able to set the path). </br>
+Then we load parameters from params.yml (safe_load is used) and then we specify what key we need to call like here we have 2 keys: preprocess and train.</br>
+Defined a function with 2 parameters: input_path and output_path. os.makedirs will be used to make directory where we store the output of preprocessor stage.
+```bash
+import pandas as pd
+import sys
+import yaml
+import os
+
+## Load paramters from params.yml
+params=yaml.safe_load(open("params.yml"))['preprocess']
+
+def preprocess(input_path,output_path):
+    data=pd.read_csv(input_path)
+
+    os.makedirs(os.path.dirname(output_path),exist_ok=True)
+    data.to_csv(output_path,header=None,index=False)
+    print(f"Preprocesses data saved to {output_path}")
+
+if __name__=="__main__":
+    preprocess(params["input"],params["output"])
+```
 
 #### train.py
 
