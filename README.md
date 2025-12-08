@@ -197,11 +197,65 @@ dvc add data/raw/data.csv
 git add data/raw/data.csv.dvc data/raw/.gitignore
 git commit -m "Added raw data"
 ```
-- To combine all these as a pipeline, we'll use a functionality called "dvc stage" means dvc will be able to define how corresponding steps of ML workflow really need to be executed and this entire thing can be tracked in dvc.yml file.
+- To combine all these as a pipeline, we'll use a functionality called "dvc stage" means dvc will be able to define how corresponding steps of ML workflow really need to be executed and this entire thing can be tracked in dvc.yml file. "p" represents parameters, "d" represents dependencies for the stage like for this stage we have 2 dependencies: preprocess.py and raw/data.csv, "n" represents name of the process and "o" represents output of the stage. When we run this in the terminal, dvc.yml will get created. 
 ```bash
-dvc stage add -n preprocess:
+dvc stage add -n preprocess \
     -p preprocess.input,preprocess.output \
     -d src/preprocess.py -d data/raw/data.csv \
     -o data/processed/data.csv \
     python src/preprocess.py
+```
+<img width="396" height="276" alt="image" src="https://github.com/user-attachments/assets/e7a856b6-35e2-4013-b73d-11cbc97c31a7" />
+
+- This is just one stage and we will have multiple stages like this. This is the main MLOps task. All the functions like preprocess.py, train.py and evaluate.py will be developed by either Developers or ML Engineers but the pipeline is created and managed by MLOps/DevOps engineers.  </br>
+- Complete pipeline file will be like this (We can either run for each of the stages separately ot altogether, it will be added in the sequence in the dvc.yml file) :
+```bash
+dvc stage add -n preprocess \
+    -p preprocess.input,preprocess.output \
+    -d src/preprocess.py -d data/raw/data.csv \
+    -o data/processed/data.csv \
+    python src/preprocess.py
+
+dvc stage add -n train \
+    -p train.data,train.model,train.random_state,train.n_estimators,train.max_depth \
+    -d src/train.py -d data/raw/data.csv \
+    -o models/model.pkl \
+    python src/train.py
+
+dvc stage add -n evaluate \
+    -d src/evaluate.py -d models/model.pkl -d data/raw/data.csv \
+    python src/evaluate.py
+```
+ After Running all of these stages, dvc.yml will look like this:
+ ```bash
+stages:
+  preprocess:
+    cmd: python src/preprocess.py
+    deps:
+    - data/raw/data.csv
+    - src/preprocess.py
+    params:
+    - preprocess.input
+    - preprocess.output
+    outs:
+    - data/processed/data.csv
+  train:
+    cmd: python src/train.py
+    deps:
+    - data/raw/data.csv
+    - src/train.py
+    params:
+    - train.data
+    - train.max_depth
+    - train.model
+    - train.n_estimators
+    - train.random_state
+    outs:
+    - models/model.pkl
+  evaluate:
+    cmd: python src/evaluate.py
+    deps:
+    - data/raw/data.csv
+    - models/model.pkl
+    - src/evaluate.py
 ```
