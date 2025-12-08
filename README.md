@@ -190,3 +190,18 @@ if __name__=="__main__":
     evaluate(params["data"],params["model"])
 
 ```
+
+- Now we want all of this to run as a pipeline instead of individual standalone steps. First we ned to track raw data that is coming i.e, data/raw/data.csv. As soon as we dvc intialize this folder, we'll need these to be tracked by git: data/raw/data.csv.dvc, data/raw/.gitignore so we git add them and then commit.
+```bash
+dvc add data/raw/data.csv
+git add data/raw/data.csv.dvc data/raw/.gitignore
+git commit -m "Added raw data"
+```
+- To combine all these as a pipeline, we'll use a functionality called "dvc stage" means dvc will be able to define how corresponding steps of ML workflow really need to be executed and this entire thing can be tracked in dvc.yml file.
+```bash
+dvc stage add -n preprocess:
+    -p preprocess.input,preprocess.output \
+    -d src/preprocess.py -d data/raw/data.csv \
+    -o data/processed/data.csv \
+    python src/preprocess.py
+```
