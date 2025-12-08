@@ -69,6 +69,7 @@ Create a Function for Hyperparamter tuning which first initializes a default Ran
 grid_search.fit(X_train, y_train): This step trains the model for each combination of hyperparameters, evaluates them using cross-validation and then finds the best combination.</br>
 Then this function returns the entire GridSearchCV object. </br>
 Train function gets the best model, predicts and evaluates and then prints Accuracy.
+
 ```bash
 def train(data_path,model_path,random_state,n_estimators,max_depth):
     data=pd.read_csv(data_path)
@@ -104,4 +105,16 @@ def train(data_path,model_path,random_state,n_estimators,max_depth):
 ```
 
 
-- All the Tracking will be happen in the DagsHub repository. 
+- Now we start tracking our MLFlow experiments. All the Tracking will be happen in the DagsHub repository. </br>
+  Log the Parameters.</br>
+
+```bash
+        ## Log additionl metrics
+        mlflow.log_metric("accuracy",accuracy_score)
+        mlflow.log_param("best_n_estimators",grid_search.best_params_['n_estimators'])
+        mlflow.log_param("best_max_depth",grid_search.best_params_['max_depth'])
+        mlflow.log_param("best_samples_split",grid_search.best_params_['min_samples_split'])
+        mlflow.log_param("best_samples_leaf",grid_search.best_params_['min_samples_leaf'])
+```
+
+
