@@ -259,3 +259,9 @@ stages:
     - models/model.pkl
     - src/evaluate.py
 ```
+- To run this entire pipeline:
+```bash
+dev repro
+```
+Pipeline will start running like this: </br>
+<img width="748" height="241" alt="image" src="https://github.com/user-attachments/assets/975f91ce-e37f-4649-b1ff-dfd3b1a98f11" />
