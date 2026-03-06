@@ -33,7 +33,7 @@ git add data/file1.txt.dvc
 git add data/.gitignore 
 ```
 
-Also a new file "file1.txt.dvc" is created which will consist of hash-key which is mapped to the data we have i.e, data/file1.txt. If we change this data and add some other data in data/file1.txt, then again this hash value will change. This mapping is done inside the .dvc/cache/ there will be that hash key.
+Also a new file "file1.txt.dvc" is created which will consist of hash-key which is mapped to the data we have i.e, data/file1.txt. If we change this data and add some other data in data/file1.txt, then again this hash value will change. This mapping is done inside the .dvc/cache/ there will be that hash key. </br>
 <img width="797" height="301" alt="image" src="https://github.com/user-attachments/assets/3ea08f7e-bdff-4c2f-9d73-fb9b7236c87a" />
 
 - When any changes will be made to this file data/file1.txt and we do "dvc add data/file1.txt", the hash value in file1.txt.dvc will change.
